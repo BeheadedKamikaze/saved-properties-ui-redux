@@ -24,23 +24,30 @@
 // const unique = (elem, pos, arr) => arr.indexOf(elem) === pos;
 import dedupe from "dedupe"
 
-const properties = (state = {}, action) => {
+const initialState = {
+  results: [],
+  saved: [],
+}
+
+const properties = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_PROPERTY":
       return {
-        results: state.results,
+        // results: state.results,
+        ...state,
         saved: dedupe([
           ...state.saved,
-          state.results.filter(property => property.id === action.id)[0]
+          ...state.results.filter(propertyId => propertyId === action.id)
         ])
       };
     case "REMOVE_PROPERTY":
       return {
+        ...state,
         results: dedupe([
           ...state.results,
-          state.saved.filter(property => property.id === action.id)[0]
+          ...state.saved.filter(propertyId => propertyId === action.id)
         ]),
-        saved: state.saved.filter(property => property.id !== action.id)
+        saved: state.saved.filter(propertyId => propertyId !== action.id)
       };
     default:
       return state;

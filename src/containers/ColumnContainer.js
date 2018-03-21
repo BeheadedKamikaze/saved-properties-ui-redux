@@ -1,13 +1,10 @@
 import { connect } from "react-redux";
 import { addProperty, removeProperty } from "../actions";
 import Column from "../components/Column";
+import { selectProperties } from "../selectors";
 
 const mapStateToProps = (state, ownProps) => ({
-  type: ownProps.type,
-  properties:
-    ownProps.type === "results"
-      ? state.results
-      : state.saved
+  properties: selectProperties(state, state[ownProps.type])
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

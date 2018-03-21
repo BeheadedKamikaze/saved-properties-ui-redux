@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Card = ({type, property, onClick}) => (
+const Card = ({buttonText, buttonBackgroundColor, property, onClick}) => (
   <div>
     <header>ID: {property.id}</header>
     <div>
@@ -10,29 +10,32 @@ const Card = ({type, property, onClick}) => (
     <div>
       <button
         style={{
-          backgroundColor: type === "results" ? "green" : "red",
+          backgroundColor: buttonBackgroundColor,
           color: "white"
         }}
         onClick={onClick}
       >
-        {type === "results" ? "Add Property" : "Remove Property"}
+        {buttonText}
       </button>
     </div>
   </div>
 );
 
-Card.propTypes = {
-  type: PropTypes.string.isRequired,
-  property: PropTypes.shape({
-    price: PropTypes.string.isRequired,
-    agency: PropTypes.shape({
-      brandingColors: PropTypes.shape({ primary: PropTypes.string.isRequired })
-        .isRequired,
-      logo: PropTypes.string.isRequired
-    }).isRequired,
-    id: PropTypes.string.isRequired,
-    mainImage: PropTypes.string.isRequired
+export const PropertyPropTypes = PropTypes.shape({
+  price: PropTypes.string.isRequired,
+  agency: PropTypes.shape({
+    brandingColors: PropTypes.shape({ primary: PropTypes.string.isRequired })
+      .isRequired,
+    logo: PropTypes.string.isRequired
   }).isRequired,
+  id: PropTypes.string.isRequired,
+  mainImage: PropTypes.string.isRequired
+});
+
+Card.propTypes = {
+  buttonText: PropTypes.string.isRequired,
+  buttonBackgroundColor: PropTypes.string.isRequired,
+  property: PropertyPropTypes.isRequired,
   onClick: PropTypes.func.isRequired
 };
 

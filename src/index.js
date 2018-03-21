@@ -1,6 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from "react-redux";
 import "./index.css";
 import App from "./components/App";
@@ -9,7 +10,12 @@ import data from "./data/properties.json";
 
 import registerServiceWorker from "./registerServiceWorker";
 
-const store = createStore(reducer, data);
+const composeEnhancers = composeWithDevTools({
+  // stuff here
+});
+const store = createStore(reducer, data, composeEnhancers(
+  // ...applyMiddleware(...middleware),
+));
 render(
   <Provider store={store}>
     <App />
